@@ -74,3 +74,20 @@ Set-AzureADPolicy -Definition $policyValue -Id $B2B.Id
 ```
 
 Restore Cross Tenant Access Settings Partner Configurations:
+```
+$path = "TODO" #Enter the file path of your backup txt file
+connect-graph
+#Delete all XTAP partners
+$CurrentXTAP = Invoke-MgGraphRequest -Method GET -Uri https://graph.microsoft.com/beta/policies/crossTenantAccessPolicy/partners
+$tenantid = $CurrentXTAP.value.tenantid
+Foreach($id in $tenantid){
+$XTAP = Invoke-MgGraphRequest -Method DELETE -Uri https://graph.microsoft.com/beta/policies/crossTenantAccessPolicy/partners/$id
+}
+
+#Restore XTAP partners
+$XTAPRestore = Get-Content -Path $path | convertfrom-json
+foreach($tenant in $XTAPRestore){
+$body = $tenant | ConvertTo-Json -Depth 5
+$XTAP = Invoke-MgGraphRequest -Method POST -Uri https://graph.microsoft.com/beta/policies/crossTenantAccessPolicy/partners -Body $body
+}
+```
