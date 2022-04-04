@@ -28,7 +28,7 @@ $domains | out-file $path
 Backup Cross Tenant Access Settings Partner Configurations:
 ```
 $path = "TODO" #Enter the file path where you want the txt file exported
-connect-graph
+connect-graph -Scopes Policy.Read.All
 $XTAP = Invoke-MgGraphRequest -Method GET -Uri https://graph.microsoft.com/beta/policies/crossTenantAccessPolicy/partners
 $XTAPBackup = $XTAP.Value | ConvertTo-Json -Depth 10
 $XTAPBackup | out-file $path
@@ -76,7 +76,7 @@ Set-AzureADPolicy -Definition $policyValue -Id $B2B.Id
 Restore Cross Tenant Access Settings Partner Configurations:
 ```
 $path = "TODO" #Enter the file path of your backup txt file
-connect-graph
+connect-graph -Scopes Policy.Read.All,Policy.ReadWrite.CrossTenantAccess
 #Delete all XTAP partners
 $CurrentXTAP = Invoke-MgGraphRequest -Method GET -Uri https://graph.microsoft.com/beta/policies/crossTenantAccessPolicy/partners
 $tenantid = $CurrentXTAP.value.tenantid
