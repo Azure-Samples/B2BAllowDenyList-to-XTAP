@@ -26,7 +26,13 @@ $domains = $dmn.b2bmanagementpolicy.InvitationsAllowedAndBlockedDomainsPolicy.Al
 $domains | out-file $path
 ```
 Backup Cross Tenant Access Settings Partner Configurations:
-
+```
+$path = "TODO" #Enter the file path where you want the txt file exported
+connect-graph
+$XTAP = Invoke-MgGraphRequest -Method GET -Uri https://graph.microsoft.com/beta/policies/crossTenantAccessPolicy/partners
+$XTAPBackup = $XTAP.Value | ConvertTo-Json
+$XTAPBackup | out-file $path
+```
 
 ## Steps
 1. Determine if your current configuration is an allow list or a deny list. This can be found at Azure AD > External Identities > External Collaboration Settings. 
