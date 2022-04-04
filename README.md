@@ -30,7 +30,7 @@ Backup Cross Tenant Access Settings Partner Configurations:
 $path = "TODO" #Enter the file path where you want the txt file exported
 connect-graph
 $XTAP = Invoke-MgGraphRequest -Method GET -Uri https://graph.microsoft.com/beta/policies/crossTenantAccessPolicy/partners
-$XTAPBackup = $XTAP.Value | ConvertTo-Json
+$XTAPBackup = $XTAP.Value | ConvertTo-Json -Depth 10
 $XTAPBackup | out-file $path
 ```
 
