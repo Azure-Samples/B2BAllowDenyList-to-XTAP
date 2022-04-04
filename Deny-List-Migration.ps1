@@ -25,7 +25,7 @@ $body = @{
   "tenantId" = "$tenantId"
   "b2bCollaborationInbound" = @{
                 "usersAndGroups" = @{
-                    "accessType" = "allowed"
+                    "accessType" = "blocked"
                     "targets" = @(
                         @{
                             "target" = "AllUsers"
@@ -49,7 +49,7 @@ $B2BArray = $B2BArray + $domain
 $policyValue = @{
 "B2BManagementPolicy" =  @{
     "InvitationsAllowedAndBlockedDomainsPolicy" = @{
-        "AllowedDomains" = @($B2BArray)}
+        "BlockedDomains" = @($B2BArray)}
     }
 } | ConvertTo-Json -Depth 5
 Set-AzureADPolicy -Definition $policyValue -Id $B2B.Id
