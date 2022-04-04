@@ -36,8 +36,8 @@ $XTAPBackup | out-file $path
 
 ## Steps
 1. Determine if your current configuration is an allow list or a deny list. This can be found at Azure AD > External Identities > External Collaboration Settings. 
-- If "Collaboration Restrictions" is set to "Deny invitations to the specified domains" run the Deny-List-Migration script.
-- If "Collaboration Restrictions" is set to "Allow invitations only to the specified domains" run the Allow-List-Migration script.
+    - If "Collaboration Restrictions" is set to "Deny invitations to the specified domains" run the Deny-List-Migration script.
+    - If "Collaboration Restrictions" is set to "Allow invitations only to the specified domains" run the Allow-List-Migration script.
 2. Run the script in Windows PowerShell. When prompted, authenticate with a Global Admin.
 3. Once the script is complete, verify the policies have been updated correctly.
 
