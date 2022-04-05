@@ -14,7 +14,7 @@ Install-Module AzureAD
 ```
 
 ## Backup Current Configuration
-You should backup the existing policies before running this script.
+You should backup the existing policies before running this script in case you need to revert to the previous state.
 
 Backup the Allow List:
 ```
@@ -47,10 +47,12 @@ $XTAPBackup | out-file $path
 1. Determine if your current configuration is an allow list or a deny list. This can be found at Azure AD > External Identities > External Collaboration Settings. 
     - If "Collaboration Restrictions" is set to "Deny invitations to the specified domains" run the Deny-List-Migration script.
     - If "Collaboration Restrictions" is set to "Allow invitations only to the specified domains" run the Allow-List-Migration script.
-2. Run the script in Windows PowerShell. When prompted, authenticate with a Global Admin.
+2. Run the script in Windows PowerShell. When prompted, authenticate with a Global Admin. Note, you will likely be prompted twice as this script requires authentication to AAD Graph and Microsoft Graph API's.
 3. Once the script is complete, verify the policies have been updated correctly.
 
 ## Restore Original Configuration
+
+In the event, that you need to revert to the original configuration, you can run the following to restore from the backup taken earlier.
 
 Restore Allow List:
 ```
