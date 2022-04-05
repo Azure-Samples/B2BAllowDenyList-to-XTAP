@@ -1,7 +1,7 @@
 ﻿connect-azuread
 $b2b = get-azureadpolicy | Where-Object {$_.type -eq "B2BManagementPolicy"}
 $dmn = $b2b.Definition | convertfrom-json 
-$domains = $dmn.b2bmanagementpolicy.InvitationsAllowedAndBlockedDomainsPolicy.AllowedDomains
+$domains = $dmn.b2bmanagementpolicy.InvitationsAllowedAndBlockedDomainsPolicy.BlockedDomains
 $B2BArray = @()
 
 Connect-Graph -scopes policy.read.all
