@@ -16,13 +16,22 @@ Install-Module AzureADPreview
 ## Backup Current Configuration
 You should backup the existing policies before running this script.
 
-Backup the Allow/Deny List:
+Backup the Allow List:
 ```
 $path = "TODO" #Enter the file path where you want the txt file exported
 connect-azuread
 $b2b = get-azureadpolicy | Where-Object {$_.type -eq "B2BManagementPolicy"}
 $dmn = $b2b.Definition | convertfrom-json 
 $domains = $dmn.b2bmanagementpolicy.InvitationsAllowedAndBlockedDomainsPolicy.AllowedDomains
+$domains | out-file $path
+```
+Backup the Deny List:
+```
+$path = "TODO" #Enter the file path where you want the txt file exported
+connect-azuread
+$b2b = get-azureadpolicy | Where-Object {$_.type -eq "B2BManagementPolicy"}
+$dmn = $b2b.Definition | convertfrom-json 
+$domains = $dmn.b2bmanagementpolicy.InvitationsAllowedAndBlockedDomainsPolicy.BlockedDomains
 $domains | out-file $path
 ```
 Backup Cross Tenant Access Settings Partner Configurations:
