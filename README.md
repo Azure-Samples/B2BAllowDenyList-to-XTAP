@@ -10,7 +10,7 @@ Install-Module Microsoft.Graph -Scope CurrentUser
 - [AzureAD PowerShell Module](https://docs.microsoft.com/en-us/powershell/azure/active-directory/install-adv2?view=azureadps-2.0)
 
 ```
-Install-Module AzureADPreview
+Install-Module AzureAD
 ```
 
 ## Backup Current Configuration
