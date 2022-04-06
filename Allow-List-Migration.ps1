@@ -1,4 +1,4 @@
-﻿connect-azuread
+connect-azuread
 $b2b = get-azureadpolicy | Where-Object {$_.type -eq "B2BManagementPolicy"}
 $dmn = $b2b.Definition | convertfrom-json 
 $domains = $dmn.b2bmanagementpolicy.InvitationsAllowedAndBlockedDomainsPolicy.AllowedDomains
@@ -7,15 +7,23 @@ $B2BArray = @()
 Connect-Graph -scopes policy.read.all
 #Get Tenant ID's from domains
 foreach($domain in $domains){
+Write-Output "-----------------------"
 $dmn = ""
+try {
 $dmn = Invoke-MgGraphRequest -Method GET -Uri "https://graph.microsoft.com/beta/tenantRelationships/findTenantInformationByDomainName(domainName='$domain')"
 $tenantid = $dmn.tenantId
+}
+catch
+{
+Write-Output "$domain doesn't exist in Azure AD"
+}
 
 #If domain resolves to tenant ID, add Organization as organization in XTAP.
 If($dmn -ne ""){
 
 #Prevent adding Consumer Microsoft Tenants. Instead, add domain to B2B Array (gmail.com, outlook.com, etc.).
 If(($tenantid -eq "f8cdef31-a31e-4b4a-93e4-5f571e91255a") -or ($tenantid -eq "9cd80435-793b-4f48-844b-6b3f37d1c1f3")){
+Write-Output "$domain resolved to Azure AD tenant, but it is a consumer domain. $domain will not be added to XTAP."
 $B2BArray = $B2BArray + $domain
 }
 
@@ -35,7 +43,14 @@ $body = @{
                 }
 }
 } | ConvertTo-Json -Depth 6
+Write-Output "Adding $domain to XTAP"
+
+Try{
 Invoke-MgGraphRequest -Method POST -Uri https://graph.microsoft.com/beta/policies/crossTenantAccessPolicy/partners -Body $body
+}
+Catch{
+Write-Output "Unable to add $domain to XTAP. Verify if $domain already is present in XTAP." 
+}
 }
 }
 
@@ -52,4 +67,7 @@ $policyValue = @{
         "AllowedDomains" = @($B2BArray)}
     }
 } | ConvertTo-Json -Depth 5
+Write-Output "-----------------------"
+Write-Output "The following domains could not be migrated to XTAP:"
+$B2BArray
 Set-AzureADPolicy -Definition $policyValue -Id $B2B.Id
