@@ -68,6 +68,6 @@ $policyValue = @{
     }
 } | ConvertTo-Json -Depth 5
 Write-Output "-----------------------"
-Write-Output "The following domains could not be migrated to XTAP:"
+Write-Output "The following domains could not be migrated to XTAP and will remain on the Deny List:"
 $B2BArray
 Set-AzureADPolicy -Definition $policyValue -Id $B2B.Id
