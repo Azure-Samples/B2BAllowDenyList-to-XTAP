@@ -4,7 +4,7 @@ $dmn = $b2b.Definition | convertfrom-json
 $domains = $dmn.b2bmanagementpolicy.InvitationsAllowedAndBlockedDomainsPolicy.BlockedDomains
 $B2BArray = @()
 
-Connect-Graph -scopes policy.read.all
+Connect-Graph -scopes "policy.read.all", "CrossTenantInformation.ReadBasic.All", "Policy.ReadWrite.CrossTenantAccess"
 #Get Tenant ID's from domains
 foreach($domain in $domains){
 Write-Output "-----------------------"
