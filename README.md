@@ -7,7 +7,7 @@ Sample script to migrate Azure AD domains from the External Collaboration Settin
 ```
 Install-Module Microsoft.Graph -Scope CurrentUser
 ```
-- [AzureADPreview PowerShell Module]([https://docs.microsoft.com/en-us/powershell/azure/active-directory/install-adv2?view=azureadps-2.0](https://www.powershellgallery.com/packages/AzureADPreview/2.0.2.183))
+- [AzureADPreview PowerShell Module](https://docs.microsoft.com/en-us/powershell/azure/active-directory/install-adv2?view=azureadps-2.0https://www.powershellgallery.com/packages/AzureADPreview/2.0.2.183)
 
 ```
 Install-Module AzureADPreview
